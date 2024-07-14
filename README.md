@@ -1,18 +1,6 @@
 # Optimopia
 Task implementation for Senior Vue.js developer
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
 ## Project Setup
 
 ```sh
@@ -50,22 +38,22 @@ You are given a 2D grid of integers, where each cell represents a cost to move t
 Your task is to write a function in JavaScript/TypeScript to find the minimum cost to travel from
 the top-left corner to the bottom-right corner of the grid. You can only move right or down.
 ###Requirements
-1. Algorithm Implementation: /
+1. Algorithm Implementation:
    * Implement a function named minCostPath that takes a 2D array grid as its parameter.
    * The function should return an integer representing the minimum cost to travel from the top-left corner to the bottom-right corner of the grid.
    #### Algorithm example inputs and minimal cost values:
    * Example 1 \
    Input: [ [1, 2, 3], [4, 5, 6], [7, 8, 9] ] \
    The path: 1 → 2 → 3 → 6 → 9 \
-   Minimum cost: 21 \
+   Minimum cost: 21
    * Example 2 \
    Input: [ [1, 1, 1], [1, 1, 1], [1, 1, 1] ] \
    The path: 1 → 1 → 1 → 1 → 1 \
-   Minimum cost: 5 \
+   Minimum cost: 5
    * Example 3 \
    Input: [ [5, 4, 2], [1, 9, 3], [8, 7, 6] ] \
    The path: 5 → 4 → 2 → 3 → 6 \
-   Minimum cost 5 + 4 + 2 + 3 + 6 = 20 \
+   Minimum cost 5 + 4 + 2 + 3 + 6 = 20
 
 
 2. Vue.js Component:
