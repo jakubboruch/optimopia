@@ -38,7 +38,7 @@ const updateGrid = () => {
 }
 
 watch(inputText, () => {
-  invalidInputText.value = !Boolean(getGrid(inputText.value));
+  invalidInputText.value = !getGrid(inputText.value);
 })
 
 </script>
