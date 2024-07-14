@@ -30,6 +30,7 @@ const getGrid = (stringGrid: string): number[][] | undefined => {
     return g;
   } catch (e) {
     invalidInputText.value = true;
+    return undefined;
   }
 
 }
