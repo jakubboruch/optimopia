@@ -24,15 +24,12 @@ const getGrid = (stringGrid: string): number[][] | undefined => {
     const g: number[][] = JSON.parse(stringGrid || '[]')
     const validGrid: boolean = isGridValid(g);
     if (!validGrid) {
-      invalidInputText.value = true;
       return undefined;
     }
     return g;
   } catch (e) {
-    invalidInputText.value = true;
     return undefined;
   }
-
 }
 
 const updateGrid = () => {
@@ -41,7 +38,7 @@ const updateGrid = () => {
 }
 
 watch(inputText, () => {
-  invalidInputText.value = false;
+  invalidInputText.value = !Boolean(getGrid(inputText.value));
 })
 
 </script>
