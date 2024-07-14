@@ -1,10 +1,12 @@
 import { ref, customRef } from 'vue'
 
 
-const debounce = <T extends (...args: string[]) => void>(fn: T, delay = 0, immediate = false) => {
+const debounce = <T extends (...args: string[]) => void>(fn: T, delay: number = 0, immediate: boolean = false) => {
   let timeout: undefined | number = undefined;
   return (...args: string[]) => {
-    if (immediate && !timeout) fn(...args)
+    if (immediate && !timeout) {
+      fn(...args)
+    }
     clearTimeout(timeout)
     timeout = window.setTimeout(() => {
       fn(...args)

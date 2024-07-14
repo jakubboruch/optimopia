@@ -8,8 +8,8 @@ import Button from 'primevue/button'
 
 const inputText = useDebouncedRef('', 500, true);
 const grid = ref<number[][] | undefined>(undefined);
-const invalidInputText = ref(false);
-const { minCost, minCostPath, calcMinCost } = usePathCost();
+const invalidInputText = ref<boolean>(false);
+const { minCost, calcMinCost } = usePathCost();
 
 const isGridValid = (arr: number[][] | unknown): boolean => {
   if (!Array.isArray(arr)) {
@@ -22,7 +22,7 @@ const isGridValid = (arr: number[][] | unknown): boolean => {
 const getGrid = (stringGrid: string): number[][] | undefined => {
   try {
     const g: number[][] = JSON.parse(stringGrid || '[]')
-    const validGrid = isGridValid(g);
+    const validGrid: boolean = isGridValid(g);
     if (!validGrid) {
       invalidInputText.value = true;
       return undefined;
@@ -30,7 +30,6 @@ const getGrid = (stringGrid: string): number[][] | undefined => {
     return g;
   } catch (e) {
     invalidInputText.value = true;
-    console.error(e);
   }
 
 }
@@ -50,18 +49,18 @@ watch(inputText, () => {
   <div class="flex flex-column gap-8 w-6 mx-auto max-w-30rem">
     <section class="flex flex-column gap-3 w-100">
       <h1 class="text-center">Calculate <br />The Minimum Cost Of Path</h1>
-      <Textarea :invalid="invalidInputText" class="max-w-30rem h-6rem" v-model="inputText"></Textarea>
+      <Textarea :invalid="invalidInputText" class="o-textarea max-w-30rem h-6rem" v-model="inputText"></Textarea>
       <p v-show="invalidInputText" class="error text-xs font-bold">This is not a valid 2D array of numbers</p>
-      <Button @click="updateGrid">Update grid</Button>
-      <table>
-        <tr v-for="row in grid">
-          <td v-for="col in row" class="border-round-sm bg-primary text-center border-1 h-3rem">{{ col }}</td>
+      <Button class="o-show" @click="updateGrid">Update grid</Button>
+      <table class="o-table">
+        <tr v-for="(row, i) in grid" :key="i">
+          <td v-for="(col, j) in row" :key="j" class="border-round-sm bg-primary text-center border-1 h-3rem">{{ col }}</td>
         </tr>
       </table>
     </section>
     <section class="flex flex-column gap-3 w-100">
-      <Button v-show="grid?.length" @click="calcMinCost(grid)">Calculate Minimum Cost</Button>
-      <div v-show="minCost">Minimum Cost: <span class="font-bold">{{ minCost }}</span></div>
+      <Button class="o-calc" v-show="grid?.length" @click="calcMinCost(grid)">Calculate Minimum Cost</Button>
+      <div v-show="minCost">Minimum Cost: <span class="font-bold o-result">{{ minCost }}</span></div>
     </section>
   </div>
 </template>
