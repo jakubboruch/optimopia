@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { usePathCost } from '@/composables/usePathCost';
 import { useDebouncedRef } from '@/composables/useDebounceRef'
 
 import Textarea from 'primevue/textarea';
 import Button from 'primevue/button'
 
-const inputText = useDebouncedRef('', 500, true);
+const inputText = useDebouncedRef('[ [5, 4, 2], [1, 9, 3], [8, 7, 6] , [5, 4, 2], [1, 9, 3], [8, 7, 6] ]', 500, true);
 const grid = ref<number[][] | undefined>(undefined);
 const invalidInputText = ref<boolean>(false);
-const { minCost, calcMinCost } = usePathCost();
+const { minCost, calcMinCost, optimalPath } = usePathCost();
 
 const isGridValid = (arr: number[][] | unknown): boolean => {
   if (!Array.isArray(arr)) {
     return false;
   }
   const subArrayLength = arr[0]?.length || 0
-  return arr.every((subArr: unknown[]) => Array.isArray(subArr) && subArr.length === subArrayLength && subArr.every((item: unknown) => typeof item === 'number'))
+  return arr.every((subArr: unknown[]) => Array.isArray(subArr) && subArr.length === subArrayLength && subArr.every((item: unknown) => typeof item === 'number' && item >= 0))
 }
 
 const getGrid = (stringGrid: string): number[][] | undefined => {
@@ -34,7 +34,12 @@ const getGrid = (stringGrid: string): number[][] | undefined => {
 
 const updateGrid = () => {
   minCost.value = undefined;
+  optimalPath.value = [];
   grid.value = getGrid(inputText.value)
+}
+
+const isInOptimalPath = (i, j) => {
+  return optimalPath.value.some((coordinate) => coordinate[0] === i && coordinate[1] === j)
 }
 
 watch(inputText, () => {
@@ -52,7 +57,7 @@ watch(inputText, () => {
       <Button class="o-show" @click="updateGrid">Update grid</Button>
       <table class="o-table">
         <tr v-for="(row, i) in grid" :key="i">
-          <td v-for="(col, j) in row" :key="j" class="border-round-sm bg-primary text-center border-1 h-3rem">{{ col }}</td>
+          <td v-for="(col, j) in row" :key="j" class="border-round-sm bg-primary text-center border-1 h-3rem" :class="{'highlight': isInOptimalPath(i,j)}">{{ col }}</td>
         </tr>
       </table>
     </section>
@@ -64,6 +69,9 @@ watch(inputText, () => {
 </template>
 
 <style lang="scss" scoped>
+.highlight {
+  background-color: red !important;
+}
 .error {
   color: var(--p-textarea-invalid-border-color);
 }

@@ -2,6 +2,32 @@ import { ref } from 'vue'
 
 export function usePathCost() {
   const minCost = ref<undefined | number>(undefined);
+  const optimalPath = ref([])
+
+  const setOptimalPath = (dp: number[][]): void => {
+    const rowsLength: number = dp.length;
+    const colsLength: number = dp[0].length;
+    let i = rowsLength - 1;
+    let j = colsLength - 1;
+
+    while (i > 0 || j > 0) {
+      optimalPath.value.push([i, j]);
+      const minValue = Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
+      if (minValue === dp[i - 1][j]) {
+        i--
+      } else {
+        if (minValue === dp[i][j - 1]) {
+          j--
+        } else {
+          i--; j--;
+        }
+      }
+    }
+    optimalPath.value.push([0, 0]);
+    optimalPath.value.reverse();
+
+  }
+
   const minCostPath = (grid: number[][]): number => {
     const rowsLength: number = grid.length;
     const colsLength: number = grid[0].length;
@@ -23,9 +49,10 @@ export function usePathCost() {
     // Calculate the minimum cost for each cell
     for (let i = 1; i < rowsLength; i++) {
       for (let j = 1; j < colsLength; j++) {
-        dp[i][j] = grid[i][j] + Math.min(dp[i - 1][j], dp[i][j - 1]);
+        dp[i][j] = grid[i][j] + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
       }
     }
+    setOptimalPath(dp);
 
     // Return the minimum cost for the bottom-right cell
     return dp[rowsLength - 1][colsLength - 1];
@@ -37,5 +64,5 @@ export function usePathCost() {
     minCost.value = minCostPath(grid);
   }
 
-  return { minCost, minCostPath, calcMinCost }
+  return { minCost, minCostPath, calcMinCost, optimalPath }
 }
