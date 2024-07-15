@@ -2,7 +2,7 @@ import { ref } from 'vue'
 
 export function usePathCost() {
   const minCost = ref<undefined | number>(undefined);
-  const optimalPath = ref([])
+  const optimalPath = ref<number[][]>([])
 
   const setOptimalPath = (dp: number[][]): void => {
     const rowsLength: number = dp.length;
