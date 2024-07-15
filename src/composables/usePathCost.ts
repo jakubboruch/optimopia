@@ -6,13 +6,7 @@ export function usePathCost() {
 
 
   const getMinValue = (dp: number[][], i: number, j: number): number => {
-    if (i > 0 && j > 0) {
-      return Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
-    }
-    if (i <= 0 && j > 0) {
-      return dp[i][j - 1]
-    }
-    return dp[i - 1][j]
+      return Math.min(dp[i - 1]?.[j] ?? Infinity, dp[i][j - 1] ?? Infinity) // dp[i - 1]?.[j - 1] ?? Infinity
   }
   const setOptimalPath = (dp: number[][]): void => {
     const rowsLength: number = dp.length;
