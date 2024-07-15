@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { ref, watch } from 'vue'
 import { usePathCost } from '@/composables/usePathCost';
 import { useDebouncedRef } from '@/composables/useDebounceRef'
 
@@ -38,7 +38,7 @@ const updateGrid = () => {
   grid.value = getGrid(inputText.value)
 }
 
-const isInOptimalPath = (i, j) => {
+const isInOptimalPath = (i: number, j: number) => {
   return optimalPath.value.some((coordinate) => coordinate[0] === i && coordinate[1] === j)
 }
 
