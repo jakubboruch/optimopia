@@ -73,6 +73,9 @@ the top-left corner to the bottom-right corner of the grid. You can only move ri
    ○ You are free to design the component as you wish. You do not need to copy the
    design from the screenshot provided. Focus on implementing the required
    functionalities.
+4. Additional requirements:
+   * You can move diagonal.
+   * Path should be marked
 
 ### Expected Component Behavior
 * The table grid should update when the "Update Grid" button is clicked after modifying the
